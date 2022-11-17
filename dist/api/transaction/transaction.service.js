@@ -22,13 +22,9 @@ let TransactionService = class TransactionService {
         this.repo = repo;
     }
     async create(transaction) {
-        try {
-            const newTransaction = this.repo.create(transaction);
-            return await this.repo.save(newTransaction);
-        }
-        catch (e) {
-            throw new common_1.ForbiddenException(e.message);
-        }
+        console.log(transaction);
+        const transactionCreated = await this.repo.save(transaction);
+        return transactionCreated;
     }
 };
 TransactionService = __decorate([

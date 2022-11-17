@@ -12,12 +12,12 @@ const typeorm_1 = require("@nestjs/typeorm");
 const bank_entity_1 = require("./bank.entity");
 const bank_service_1 = require("./bank.service");
 const bank_controller_1 = require("./bank.controller");
-const transaction_service_1 = require("../transaction/transaction.service");
+const transaction_module_1 = require("../transaction/transaction.module");
 let BankModule = class BankModule {
 };
 BankModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([bank_entity_1.Bank]), transaction_service_1.TransactionService],
+        imports: [typeorm_1.TypeOrmModule.forFeature([bank_entity_1.Bank]), transaction_module_1.TransactionModule],
         providers: [bank_service_1.BankService],
         controllers: [bank_controller_1.BankController],
     })

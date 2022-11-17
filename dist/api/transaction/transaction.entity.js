@@ -11,12 +11,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Transaction = void 0;
 const typeorm_1 = require("typeorm");
+const bank_entity_1 = require("../bank/bank.entity");
 let Transaction = class Transaction {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Transaction.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Transaction.prototype, "amount", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    (0, typeorm_1.ManyToOne)((type) => bank_entity_1.Bank, (bank) => bank.id),
+    __metadata("design:type", Number)
+], Transaction.prototype, "bank_sender", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Transaction.prototype, "bank_receiver", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Transaction.prototype, "created_at", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], Transaction.prototype, "updated_at", void 0);
 Transaction = __decorate([
     (0, typeorm_1.Entity)()
 ], Transaction);

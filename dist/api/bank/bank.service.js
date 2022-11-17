@@ -30,6 +30,12 @@ let BankService = class BankService {
             throw new common_1.ForbiddenException(e.message);
         }
     }
+    findOne(id) {
+        return this.repo.findOne({ account_number: id });
+    }
+    update(id, bank) {
+        return this.repo.save(bank);
+    }
 };
 BankService = __decorate([
     (0, common_1.Injectable)(),

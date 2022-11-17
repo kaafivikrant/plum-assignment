@@ -35,8 +35,23 @@ export class BankController {
 
   @Post('trasaction')
   @UseInterceptors(ClassSerializerInterceptor)
-  async transactionCreate(@Body() bank: TransactionCreate): Promise<Transaction> {
-      return await this.transaction.create(bank);
+  async transactionCreate(@Body() transactionvalues: TransactionCreate) {
+      let bankSender = await this.service.findOne(transactionvalues.bank_sender);
+      let bankReceiver = await this.service.findOne(transactionvalues.bank_receiver);
+      if(!bankSender){
+          throw 'Bank Sender not found';
+      }
+      if(!bankReceiver){
+          throw 'Bank Receiver not found';
+      }
+      if(bankSender.balance < transactionvalues.amount){
+          throw 'Bank Sender not have enough balance';
+      }
+      bankSender.balance = bankSender.balance - transactionvalues.amount;
+      bankReceiver.balance = bankReceiver.balance + transactionvalues.amount;
+      await this.service.update(bankSender.id, bankSender);
+      await this.service.update(bankReceiver.id, bankReceiver);
+      return await this.transaction.create(transactionvalues);
   }
 
 }

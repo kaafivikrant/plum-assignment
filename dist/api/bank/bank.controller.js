@@ -26,8 +26,22 @@ let BankController = class BankController {
     async create(bank) {
         return await this.service.create(bank);
     }
-    async transactionCreate(bank) {
-        return await this.transaction.create(bank);
+    async transactionCreate(transactionvalues) {
+        let bankSender = await this.service.findOne(transactionvalues.bank_sender);
+        let bankReceiver = await this.service.findOne(transactionvalues.bank_receiver);
+        if (!bankSender) {
+            throw 'Bank Sender not found';
+        }
+        if (!bankReceiver) {
+            throw 'Bank Receiver not found';
+        }
+        if (bankSender.balance < transactionvalues.amount) {
+            throw 'Bank Sender not have enough balance';
+        }
+        bankSender.balance = bankSender.balance - transactionvalues.amount;
+        bankReceiver.balance = bankReceiver.balance + transactionvalues.amount;
+        await this.service.update(bankSender.id, bankSender);
+        return await this.transaction.create(transactionvalues);
     }
 };
 __decorate([

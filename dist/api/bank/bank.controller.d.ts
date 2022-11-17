@@ -9,5 +9,5 @@ export declare class BankController {
     private transaction;
     constructor(service: BankService, transaction: TransactionService);
     create(bank: BankCreate): Promise<Bank>;
-    transactionCreate(bank: TransactionCreate): Promise<Transaction>;
+    transactionCreate(transactionvalues: TransactionCreate): Promise<TransactionCreate & Transaction>;
 }
